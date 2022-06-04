@@ -13,6 +13,8 @@ class Line{
     this.length_ = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
     this.p1.line_length = this.length_;
     this.p2.line_length = this.length_;
+    this.p1.pair = p2.position;
+    this.p2.pair = p1.position;
     
     this.torque = new PVector(0, 0);
     this.velocity = new PVector(0, 0);
@@ -43,6 +45,9 @@ class Line{
   void reset_forces(){
     this.p1.force = new PVector(0, 0);
     this.p2.force = new PVector(0, 0);
+    
+    this.p1.torque = new PVector(0, 0);
+    this.p2.torque = new PVector(0, 0);
   }
   
   
@@ -61,7 +66,7 @@ class Line{
     p1.position = rotate_around_pivot(this.center, p1.position, this.angular_velocity);
     p2.position = rotate_around_pivot(this.center, p2.position, this.angular_velocity);
     
-    // FIRST DO TORQUE (since translations changes center, you would need to update again)
+    // FIRST DO TORQUE (since translations changes center, you would need to update again)  
     //translations:
     PVector acceleration = this.force.mult(1/(this.p1.m + this.p2.m));
     this.velocity.add(acceleration);
