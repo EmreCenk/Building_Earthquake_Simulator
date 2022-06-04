@@ -9,7 +9,7 @@ void setup(){
   p2 = new Point(new PVector(100, 300));
   l = new Line(p1, p2);
   p1.apply_force(new PVector(25, 10));
-  frameRate(75);
+  frameRate(10);
 }
 
 
