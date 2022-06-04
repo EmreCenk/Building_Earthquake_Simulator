@@ -24,4 +24,10 @@ class Line{
     this.force.add(this.p1.force);
     this.force.add(this.p2.force);
   }
+  
+  void paint(){
+    this.p1.paint();
+    this.p2.paint();
+    line(this.p1.position.x, this.p1.position.y, this.p2.position.x, this.p2.position.y);
+  }
 }
