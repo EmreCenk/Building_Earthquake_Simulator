@@ -61,6 +61,10 @@ class Line{
     float moment_of_inertia1 = (this.p1.m * this.p1.m * this.length_)/2;
     float moment_of_inertia2 = (this.p2.m * this.p2.m * this.length_)/2;
     float angular_acceleration = this.torque.mag()/(moment_of_inertia1 + moment_of_inertia2);
+    
+    PVector pole = new PVector(this.p1.position.x, this.p1.position.y);
+    pole.sub(this.p2.position);
+    if (dot_product(this.torque, pole) < 0) angular_acceleration *= -1; 
     this.angular_velocity += angular_acceleration; 
     
     p1.position = rotate_around_pivot(this.center, p1.position, this.angular_velocity);

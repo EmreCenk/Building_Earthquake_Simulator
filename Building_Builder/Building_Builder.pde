@@ -19,4 +19,17 @@ void draw(){
   background(255);
   l.update();
   l.paint();
+
+
+
+  draw_vector(p1.position, new PVector(25, 10));
+
+
+  
+}
+
+void keyPressed(){
+  //redraw();
+  p1.apply_force(new PVector(25, 10));
+  //noLoop();
 }

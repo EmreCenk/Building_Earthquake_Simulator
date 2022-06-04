@@ -37,5 +37,4 @@ class Point{
   void paint(){
     circle(this.position.x, this.position.y, this.radius);
   }
-
 }
