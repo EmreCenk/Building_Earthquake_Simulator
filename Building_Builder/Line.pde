@@ -4,8 +4,8 @@
 class Line{
 
   Point p1, p2;
-  float length_, angular_velocity;
-  PVector torque, force, velocity, center;
+  float length_;
+  PVector torque, force, velocity, center, angular_velocity;
   Line(Point p1, Point p2){
     this.p1 = p1;
     this.p2 = p2;
@@ -18,7 +18,7 @@ class Line{
     
     this.torque = new PVector(0, 0);
     this.velocity = new PVector(0, 0);
-    this.angular_velocity = 0;
+    this.angular_velocity = new PVector(0, 0);
   }
   
   void update_net_torque(){
@@ -60,11 +60,12 @@ class Line{
     //torque:
     float moment_of_inertia1 = (this.p1.m * this.p1.m * this.length_)/2;
     float moment_of_inertia2 = (this.p2.m * this.p2.m * this.length_)/2;
-    float angular_acceleration = this.torque.mag()/(moment_of_inertia1 + moment_of_inertia2);
-    this.angular_velocity += angular_acceleration; 
+    PVector angular_acceleration = new PVector(this.torque.x, this.torque.y);
+    angular_acceleration.mult(1/(moment_of_inertia1 + moment_of_inertia2));
+    this.angular_velocity.add(angular_acceleration);
     
-    p1.position = rotate_around_pivot(this.center, p1.position, this.angular_velocity);
-    p2.position = rotate_around_pivot(this.center, p2.position, this.angular_velocity);
+    p1.position = rotate_around_pivot(this.center, p1.position, this.angular_velocity.mag());
+    p2.position = rotate_around_pivot(this.center, p2.position, this.angular_velocity.mag());
     
     // FIRST DO TORQUE (since translations changes center, you would need to update again)  
     //translations:

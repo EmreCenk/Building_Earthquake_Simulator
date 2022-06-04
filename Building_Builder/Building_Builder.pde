@@ -19,4 +19,19 @@ void draw(){
   background(255);
   l.update();
   l.paint();
+  
+  draw_vector(p1.position, new PVector(25, 10));
+  
+  l.angular_velocity.mult(1000);
+  println(l.angular_velocity);
+  stroke(color(255, 0, 0));
+  draw_vector(p1.position, l.angular_velocity);
+  l.angular_velocity.mult(0.001);
+  stroke(0);
+}
+
+void keyPressed(){
+  redraw();
+  p1.apply_force(new PVector(25, 10));
+  noLoop();
 }
