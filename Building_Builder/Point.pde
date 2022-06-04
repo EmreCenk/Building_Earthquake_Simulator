@@ -2,7 +2,8 @@
 
 class Point{
   
-  float m, position;
+  float m;
+  PVector position;
   Point(float m, PVector position){
     this.m = m;
     this.position = position;
