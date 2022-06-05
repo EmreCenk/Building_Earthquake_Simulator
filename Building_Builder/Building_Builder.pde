@@ -11,18 +11,10 @@ void setup(){
   //p1.apply_force(new PVector(25, 10));
   frameRate(10);
   
-  Building w = new Building();
-  w.add_line(lad);
-  for (Point name: w.graph.keySet()) {
-    PVector asdf = name.position;
-    print(asdf, ": ");
-    for (Point p: w.graph.get(name)){
-      PVector value = p.position;
-      println(value);
-    }
-
-  println();println();
-  }
+  Building kk = new Building();
+  kk.add_line(lad);
+  kk.print_graph();
+  //}
   
 }
 

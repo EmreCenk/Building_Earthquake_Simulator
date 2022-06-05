@@ -25,9 +25,22 @@ class Building{
     this.add_node(l.p1, l.p2);
     this.add_node(l.p2, l.p1);
     this.lines.add(l);
-    
-    
   }
   
+  
+
+  void print_graph(){
+    for (Point name: this.graph.keySet()) {
+      PVector asdf = name.position;
+      println(asdf, ": ");
+      for (Point p: this.graph.get(name)){
+        PVector value = p.position;
+        println("-", value);
+      }
+  
+    println();println();
+  
+    }
+  }
   
 }
