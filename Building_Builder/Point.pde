@@ -24,14 +24,15 @@ class Point{
   }
   
   void apply_force(PVector f){
-    this.force.add(f);
     
     //todo: below looks potentially risky
     this.pair.sub(this.position);
     PVector torque_f = project(f, this.pair);
     this.pair.add(this.position);
     this.torque.add(new PVector(torque_f.x * this.line_length/2, torque_f.y * this.line_length/2));
-
+  
+    this.force.add(f);
+  
   }
   
   void paint(){
