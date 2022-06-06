@@ -27,21 +27,31 @@ class Building{
     this.lines.add(l);
   }
   
-  Point find_starting_node(){
-    //the highest node (lowest y value) is always the starting node when traversing the graph (since the weight of that node will be on every thing that is connected to it, that's where we start)
-    float max_height = this.lines.get(0).p1.position.y;
-    Point start_node = this.lines.get(0).p1;
-    for (Point some_point: this.graph.keySet()){
-      if (some_point.position.y < max_height){ // up is negative on the screen, being high means having a low y value
-        max_height = some_point.position.y;
-        start_node = some_point;
-      }
-    }
-    return start_node;
-    
+  void get_sorted_points(){
+    // returns a list of sorted points (depending on their height)
+  
   }
+  Point get_starting_node_index(){
+    // returns the highest node (lowest y value) is always the starting node when traversing the graph (since the weight of that node will be on every thing that is connected to it, that's where we start)
+    Point highest_node = this.lines.get(0).p1;
+    for (Point some_point: this.graph.keySet()){
+      if (some_point.position.y < highest_node.position.y) // up is negative on the screen, being high means having a low y value
+        highest_node = some_point;
+    }
+    return highest_node;
+  }
+  
   void update(){
-    for (Line l: this.lines) l.update();
+    // the order that we traverse the points is crucial
+    // to find the proper net force, we have to traverse the points from highest to lowest height
+    
+    HashMap<Point, Boolean> travelled = new HashMap<Point, Boolean>();
+    for (Point p: this.graph.keySet()) travelled.put(p, false);
+    Point first_node = this.get_starting_node_index();
+    travelled.put(first_node, true);  
+    
+
+    //for (Line l: this.lines) l.update();
   }
   void paint(){
     for (Line l: this.lines) l.paint();
