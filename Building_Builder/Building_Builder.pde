@@ -6,7 +6,7 @@ Building kk;
 void setup(){
   size(800, 800);
   p1 = new Point(new PVector(100, 200));
-  p2 = new Point(new PVector(200, 300));
+  p2 = new Point(new PVector(150, 350));
   p3 = new Point(new PVector(50, 350));
   p4 = new Point(new PVector(123, 400));
   p5 = new Point(new PVector(200, 100));
@@ -18,9 +18,10 @@ void setup(){
   kk = new Building();
   kk.add_line(new Line(p1, p2));
   kk.add_line(new Line(p2, p3));
+  kk.add_line(new Line(p1, p3));
   kk.add_line(new Line(p3, p4));
-  kk.add_line(new Line(p4, p5));
-  kk.add_line(new Line(p5, p6));
+  //kk.add_line(new Line(p4, p5));
+  //kk.add_line(new Line(p5, p6));
 
   //kk.add_line(new Line(p1, p3));
   //kk.add_line(new Line(p1, p6));
