@@ -4,7 +4,7 @@
 class Line{
 
   Point p1, p2;
-  float length_, angular_velocity;
+  float length_, angular_velocity, durability;
   PVector torque, force, velocity, center;
   Line(Point p1, Point p2){
     this.p1 = p1;
@@ -19,6 +19,7 @@ class Line{
     this.torque = new PVector(0, 0);
     this.velocity = new PVector(0, 0);
     this.angular_velocity = 0;
+    this.durability = DEFAULT_LINE_DURABILITY;
   }
   
   void update_net_torque(){
@@ -50,6 +51,21 @@ class Line{
     this.p2.torque = new PVector(0, 0);
   }
   
+  PVector get_tension(){
+    // returns the tension force on the pole
+    // could technically be the compression force as well, but naming is arbitrary at this point
+    
+    this.update_net_force(); // todo: probably don't need this (it's also being called multiple times per frame for no reason)
+    PVector pole_vector = new PVector(this.p1.position.x, this.p1.position.y);
+    pole_vector.sub(this.p2.position);
+    PVector f1 = project(this.p1.force, pole_vector);
+    PVector f2 = project(this.p2.force, pole_vector);
+    return f1.add(f2);
+  }
+  
+  boolean will_break(){
+    return this.get_tension().mag() > this.durability;
+  }
   
   void update(){
     
