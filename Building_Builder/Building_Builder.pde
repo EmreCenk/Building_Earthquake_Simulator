@@ -16,12 +16,17 @@ void setup(){
   frameRate(10);
   
   kk = new Building();
-  kk.add_line(new Line(p1, p2));
-  kk.add_line(new Line(p2, p3));
-  kk.add_line(new Line(p3, p4));
-  kk.add_line(new Line(p4, p5));
-  kk.add_line(new Line(p5, p6));
+  //kk.add_line(new Line(p1, p2));
+  //kk.add_line(new Line(p2, p3));
+  //kk.add_line(new Line(p3, p4));
+  //kk.add_line(new Line(p4, p5));
+  //kk.add_line(new Line(p5, p6));
 
+  //kk.add_line(new Line(p1, p3));
+  //kk.add_line(new Line(p1, p6));
+  //kk.add_line(new Line(p4, p6));
+  Point[] w = {p1, p2, p3, p4, p5, p6};
+  //for (int
   kk.print_graph();
 
 }

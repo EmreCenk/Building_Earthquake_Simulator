@@ -33,7 +33,7 @@ ArrayList<Point> merge(ArrayList<Point> p1, ArrayList<Point> p2){
 }
 
 ArrayList<Point> merge_sort(ArrayList<Point> nod){
-  if (nod.size() == 1) return nod;
+  if (nod.size() <= 1) return nod;
   ArrayList<Point> half_1 = new ArrayList<Point>();
   ArrayList<Point> half_2 = new ArrayList<Point>();
   int midpoint = nod.size()/2;
