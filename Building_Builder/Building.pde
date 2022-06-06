@@ -1,24 +1,25 @@
 
 
 import java.util.Map;
-
+import java.util.HashSet;
 class Building{
   // what's a building, if not just a bunch of lines stuck together?
   ArrayList<Line> lines; // a list of lines in case I need them at some point
-  HashMap<Point, ArrayList<Point>> graph; // maps points to points that they are adjacent to (basically an adjacency list where the points are nodes and lines are edges)
+  HashMap<Point, HashSet<Point>> graph; // maps points to points that they are adjacent to (basically an adjacency list where the points are nodes and lines are edges)
   Building(){
     this.lines = new ArrayList<Line>();
-    this.graph = new HashMap<Point, ArrayList<Point>>();
+    this.graph = new HashMap<Point, HashSet<Point>>();
   }
   
   
   void add_node(Point point_1, Point point_2){
     if (this.graph.get(point_1) == null){
-      ArrayList<Point> a = new ArrayList<Point>();
+      HashSet<Point> a = new HashSet<Point>();
       a.add(point_2);
       this.graph.put(point_1, a);
     }
     else this.graph.get(point_1).add(point_2);
+
   
   }
   void add_line(Line l){
@@ -27,31 +28,67 @@ class Building{
     this.lines.add(l);
   }
   
-  void get_sorted_points(){
+  ArrayList<Point> get_sorted_points(){
     // returns a list of sorted points (depending on their height)
-  
+    ArrayList<Point> points = new ArrayList<Point>();
+    for (Point point: this.graph.keySet()) points.add(point);
+    return merge_sort(points);
   }
-  Point get_starting_node_index(){
-    // returns the highest node (lowest y value) is always the starting node when traversing the graph (since the weight of that node will be on every thing that is connected to it, that's where we start)
-    Point highest_node = this.lines.get(0).p1;
-    for (Point some_point: this.graph.keySet()){
-      if (some_point.position.y < highest_node.position.y) // up is negative on the screen, being high means having a low y value
-        highest_node = some_point;
+
+  
+  void reset_forces(){
+    for (Point name: this.graph.keySet()) {
+      name.force.x = 0;
+      name.force.y = 0;
     }
-    return highest_node;
+
   }
   
   void update(){
     // the order that we traverse the points is crucial
     // to find the proper net force, we have to traverse the points from highest to lowest height
     
-    HashMap<Point, Boolean> travelled = new HashMap<Point, Boolean>();
-    for (Point p: this.graph.keySet()) travelled.put(p, false);
-    Point first_node = this.get_starting_node_index();
-    travelled.put(first_node, true);  
+    this.reset_forces();
+    float magnitude;
+    PVector pole_vector = new PVector(0, 0);
+    int non_visited_neighbour_count;
     
+    //HashMap<Point, Boolean> travelled = new HashMap<Point, Boolean>();
+    //for (Point p: this.graph.keySet()) travelled.put(p, false);
+    
+    ArrayList<Point> points = this.get_sorted_points();
+    for (Point p: points){
+      non_visited_neighbour_count = 0;
+      p.apply_force(new PVector(0, p.m * g)); // F = m*a (in this case, a=g to calculate force of gravity on the point)
+      
+      // count how many of the neighbours we haven't travelled to yet: 
+      for (Point neighbour: this.graph.get(p)){
+        if (neighbour.position.y >= p.position.y) // neighbour is below us in terms of height, we're chilling
+          non_visited_neighbour_count += 1;
+      }
+      
+      magnitude = p.force.mag();
+      magnitude /= non_visited_neighbour_count;
+      
+      for (Point neighbour: this.graph.get(p)){
+        if (neighbour.position.y <= p.position.y) continue;// neighbour is higher than us in terms of height, we're NOT chilling
+        pole_vector.x = neighbour.position.x; pole_vector.y = neighbour.position.y;
+        pole_vector.sub(p.position);
+        pole_vector.normalize().mult(magnitude);
+        neighbour.apply_force(pole_vector);
+      }
+      
+    }    
 
     //for (Line l: this.lines) l.update();
+  }
+  
+  void draw_forces(){
+    stroke(color(255, 0, 0));
+    for (Point name: this.graph.keySet()) {
+      draw_vector(name.position, name.force);
+    }
+    stroke(0);
   }
   void paint(){
     for (Line l: this.lines) l.paint();
