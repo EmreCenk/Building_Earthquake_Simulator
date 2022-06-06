@@ -16,17 +16,22 @@ void setup(){
   frameRate(10);
   
   kk = new Building();
-  //kk.add_line(new Line(p1, p2));
-  //kk.add_line(new Line(p2, p3));
-  //kk.add_line(new Line(p3, p4));
-  //kk.add_line(new Line(p4, p5));
-  //kk.add_line(new Line(p5, p6));
+  kk.add_line(new Line(p1, p2));
+  kk.add_line(new Line(p2, p3));
+  kk.add_line(new Line(p3, p4));
+  kk.add_line(new Line(p4, p5));
+  kk.add_line(new Line(p5, p6));
 
   //kk.add_line(new Line(p1, p3));
   //kk.add_line(new Line(p1, p6));
   //kk.add_line(new Line(p4, p6));
+  
   Point[] w = {p1, p2, p3, p4, p5, p6};
-  //for (int
+  for (int i = 0; i < w.length - 1; i++){
+    for (int j = i + 1; j < w.length; j++){
+      kk.add_line(new Line(w[i], w[j]));
+    }
+  } 
   kk.print_graph();
 
 }
@@ -40,7 +45,13 @@ void draw(){
   kk.paint();
 
   kk.draw_forces();
-
+  float average = 0;
+  
+  for (Point name: kk.graph.keySet()) {
+    average += name.force.mag();
+  }
+  println(average);
+  
   //draw_vector(p1.position, new PVector(25, 10));
   //draw_vector(p2.position, new PVector(50, 0));
 

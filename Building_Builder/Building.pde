@@ -90,6 +90,8 @@ class Building{
     }
     stroke(0);
   }
+  
+
   void paint(){
     for (Line l: this.lines) l.paint();
   }
