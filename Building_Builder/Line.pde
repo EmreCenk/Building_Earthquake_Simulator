@@ -81,9 +81,10 @@ class Line{
     PVector pole = new PVector(this.p1.position.x, this.p1.position.y);
     pole.sub(this.p2.position);
     if (this.torque.mag() != 0) {
+      stroke(color(0, 255, 0));
       draw_vector(this.p2.position, this.torque);
-      println(this.torque, pole, dot_product(this.torque, pole));
-      noLoop();
+      stroke(0);
+      //println(this.torque, pole, dot_product(this.torque, pole));
     }
     
     if (dot_product(this.torque, pole) < 0) angular_acceleration *= -1; 

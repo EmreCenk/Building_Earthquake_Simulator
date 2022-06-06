@@ -14,12 +14,12 @@ void setup(){
   
   //p1.apply_force(new PVector(25, 10));
   frameRate(10);
-  
+  noLoop();
   kk = new Building();
-  kk.add_line(new Line(p1, p2));
-  kk.add_line(new Line(p2, p3));
-  kk.add_line(new Line(p1, p3));
-  kk.add_line(new Line(p3, p4));
+  //kk.add_line(new Line(p1, p2));
+  //kk.add_line(new Line(p2, p3));
+  //kk.add_line(new Line(p1, p3));
+  //kk.add_line(new Line(p3, p4));
   //kk.add_line(new Line(p4, p5));
   //kk.add_line(new Line(p5, p6));
 
@@ -33,7 +33,8 @@ void setup(){
       kk.add_line(new Line(w[i], w[j]));
     }
   } 
-  kk.print_graph();
+  
+  //kk.print_graph();
 
 }
 
@@ -44,8 +45,12 @@ void draw(){
   background(255);
   kk.update();
   kk.paint();
-
   kk.draw_forces();
+  
+  fill(0);
+  stroke(0);
+  kk.draw_center_of_mass();
+
   float average = 0;
   
   for (Point name: kk.graph.keySet()) {
@@ -53,9 +58,6 @@ void draw(){
   }
   println(average);
   
-  //draw_vector(p1.position, new PVector(25, 10));
-  //draw_vector(p2.position, new PVector(50, 0));
-
 
   
 }
@@ -65,8 +67,7 @@ void keyPressed(){
   //redraw();
   //p1.apply_force(new PVector(25, 10));
   if (key == 's'){
-    p2.apply_force(new PVector(50, 0));
+    p2.apply_force(new PVector(0, 10000));
     println("yes");
   }
-  //noLoop();
 }

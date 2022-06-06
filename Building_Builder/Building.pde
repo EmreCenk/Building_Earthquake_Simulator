@@ -28,11 +28,15 @@ class Building{
     this.lines.add(l);
   }
   
-  ArrayList<Point> get_sorted_points(){
-    // returns a list of sorted points (depending on their height)
+  ArrayList<Point> get_points(){
     ArrayList<Point> points = new ArrayList<Point>();
     for (Point point: this.graph.keySet()) points.add(point);
-    return merge_sort(points);
+    return points;
+   }
+  ArrayList<Point> get_sorted_points(){
+    // returns a list of sorted points (depending on their height)
+
+    return merge_sort(this.get_points());
   }
 
   
@@ -76,6 +80,7 @@ class Building{
         pole_vector.sub(p.position);
         pole_vector.normalize().mult(magnitude);
         neighbour.apply_force(pole_vector);
+
       }
       
     }    
@@ -91,7 +96,15 @@ class Building{
     stroke(0);
   }
   
-
+  PVector get_center_of_mass(){
+    return calculate_center_of_mass(this.get_points());
+  }
+  
+  void draw_center_of_mass(){
+    PVector O = this.get_center_of_mass();
+    circle(O.x, O.y, 20);
+  }
+  
   void paint(){
     for (Line l: this.lines) l.paint();
   }
