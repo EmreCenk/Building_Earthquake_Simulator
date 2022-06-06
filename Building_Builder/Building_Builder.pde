@@ -14,7 +14,7 @@ void setup(){
   
   //p1.apply_force(new PVector(25, 10));
   frameRate(10);
-  noLoop();
+  //noLoop();
   kk = new Building();
   //kk.add_line(new Line(p1, p2));
   //kk.add_line(new Line(p2, p3));
@@ -44,19 +44,21 @@ void setup(){
 void draw(){
   background(255);
   kk.update();
+  kk.check_and_tip();
+  
   kk.paint();
   kk.draw_forces();
   
   fill(0);
   stroke(0);
   kk.draw_center_of_mass();
-
+  fill(255);
   float average = 0;
   
   for (Point name: kk.graph.keySet()) {
     average += name.force.mag();
   }
-  println(average);
+  //println(average);
   
 
   
