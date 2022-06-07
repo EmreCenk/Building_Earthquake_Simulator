@@ -5,15 +5,15 @@ Point p1, p2, p3, p4, p5, p6;
 Building kk;
 void setup(){
   size(800, 800);
-  p1 = new Point(new PVector(100, 200));
-  p2 = new Point(new PVector(150, 350));
+  p1 = new Point(new PVector(123, 540));
+  p2 = new Point(new PVector(165, 230));
   p3 = new Point(new PVector(50, 350));
-  p4 = new Point(new PVector(123, 400));
-  p5 = new Point(new PVector(200, 100));
+  p4 = new Point(new PVector(323, 420));
+  p5 = new Point(new PVector(250, 573));
   p6 = new Point(new PVector(400, 300));
   
   //p1.apply_force(new PVector(25, 10));
-  frameRate(10);
+  frameRate(75);
   //noLoop();
   kk = new Building();
   //kk.add_line(new Line(p1, p2));

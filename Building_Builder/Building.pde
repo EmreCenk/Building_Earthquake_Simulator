@@ -6,10 +6,11 @@ class Building{
   // what's a building, if not just a bunch of lines stuck together?
   ArrayList<Line> lines; // a list of lines in case I need them at some point
   HashMap<Point, HashSet<Point>> graph; // maps points to points that they are adjacent to (basically an adjacency list where the points are nodes and lines are edges)
-  float tipping_angular_speed, relative_theta;
+  float tipping_angular_speed, tipping_angular_acceleration, relative_theta;
   Building(){
     this.tipping_angular_speed = 0;
-    this.relative_theta = radians(89);
+    this.tipping_angular_acceleration = 0;
+    this.relative_theta = 0;
     this.lines = new ArrayList<Line>();
     this.graph = new HashMap<Point, HashSet<Point>>();
   }
@@ -114,7 +115,7 @@ class Building{
   ArrayList<Point> get_support_points(){
     ArrayList<Point> points = new ArrayList<Point>();
     Point lowest = this.get_lowest_height();
-    float threshold = 10;
+    float threshold = 1;
     for (Point point: this.graph.keySet()){
       if (abs(point.position.y - lowest.position.y) <= threshold) points.add(point);
     }
@@ -139,14 +140,25 @@ class Building{
     PVector center_of_mass = this.get_center_of_mass();
     println(center_of_mass, lowest_x.position, highest_x.position, points.size());
     if (center_of_mass.x < lowest_x.position.x) {
-      this.rotate_around_point(lowest_x.position, radians(1));
+      float distance = dist(center_of_mass.x, center_of_mass.y, lowest_x.position.x, lowest_x.position.y);
+      this.tipping_angular_acceleration = 0.8 * cos(this.relative_theta)/distance;
+      this.tipping_angular_speed  += this.tipping_angular_acceleration;
+      this.relative_theta -= this.tipping_angular_speed;
+
+      this.rotate_around_point(lowest_x.position, radians(-this.relative_theta));
       println("yes");
     }
     else if (center_of_mass.x > highest_x.position.x){
-      this.rotate_around_point(highest_x.position, radians(-1));
-      println("no");
 
+      float distance = dist(center_of_mass.x, center_of_mass.y, highest_x.position.x, highest_x.position.y);
+      this.tipping_angular_acceleration = 0.1 * cos(this.relative_theta)/distance;
+      this.tipping_angular_speed  += this.tipping_angular_acceleration;
+      this.relative_theta -= this.tipping_angular_speed;
+
+      this.rotate_around_point(highest_x.position, radians(this.relative_theta));
+      println("no");
     }
+
     println();
   }
   
