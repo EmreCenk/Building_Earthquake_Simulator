@@ -94,6 +94,7 @@ class Building{
   
   void draw_forces(){
     stroke(color(255, 0, 0));
+    println(this.graph.keySet().size());
     for (Point name: this.graph.keySet()) {
       draw_vector(name.position, name.force);
     }
