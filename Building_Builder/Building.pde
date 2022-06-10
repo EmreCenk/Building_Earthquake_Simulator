@@ -113,6 +113,13 @@ class Building{
     return lowest;
   }
   
+  void correct_support_points(Point lowest_point){
+    for (Point point: this.graph.keySet()){
+      point.position.y = min(point.position.y, lowest_point.position.y);
+    }
+    
+  }
+  
   ArrayList<Point> get_support_points(){
     ArrayList<Point> points = new ArrayList<Point>();
     Point lowest = this.get_lowest_height();
@@ -140,27 +147,29 @@ class Building{
     }
     PVector center_of_mass = this.get_center_of_mass();
     println(center_of_mass, lowest_x.position, highest_x.position, points.size());
+    float coef = 1;
+    Point to_rotate = lowest_x;
+    boolean rotate_ = false;
     if (center_of_mass.x < lowest_x.position.x) {
-      float distance = dist(center_of_mass.x, center_of_mass.y, lowest_x.position.x, lowest_x.position.y);
+      coef = -1;
+      to_rotate = lowest_x;
+      rotate_ = true;
+    }
+    else if (center_of_mass.x > highest_x.position.x){
+      rotate_ = true;
+    }
+
+    if (rotate_){
+      float distance = dist(center_of_mass.x, center_of_mass.y, highest_x.position.x, highest_x.position.y);
       this.tipping_angular_acceleration = 0.8 * cos(this.relative_theta)/distance;
       this.tipping_angular_speed  += this.tipping_angular_acceleration;
       this.relative_theta -= this.tipping_angular_speed;
-
-      this.rotate_around_point(lowest_x.position, radians(-this.relative_theta));
-      println("yes");
+  
+      this.rotate_around_point(to_rotate.position, radians(coef * this.relative_theta));
+      
+      ArrayList<Point> w = merge_sort(points);
+      this.correct_support_points(w.get(w.size() - 1));
     }
-    else if (center_of_mass.x > highest_x.position.x){
-
-      float distance = dist(center_of_mass.x, center_of_mass.y, highest_x.position.x, highest_x.position.y);
-      this.tipping_angular_acceleration = 0.1 * cos(this.relative_theta)/distance;
-      this.tipping_angular_speed  += this.tipping_angular_acceleration;
-      this.relative_theta -= this.tipping_angular_speed;
-
-      this.rotate_around_point(highest_x.position, radians(this.relative_theta));
-      println("no");
-    }
-
-    println();
   }
   
   void draw_center_of_mass(){
