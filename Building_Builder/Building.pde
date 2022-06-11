@@ -71,15 +71,14 @@ class Building{
       
       // count how many of the neighbours we haven't travelled to yet: 
       for (Point neighbour: this.graph.get(p)){
-        if (neighbour.position.y >= p.position.y) // neighbour is below us in terms of height, we're chilling
+        if (neighbour.position.y >= p.position.y) // neighbour is below us in terms of height, so we haven't travelled to this neighbour yet
           non_visited_neighbour_count += 1;
       }
       
-      magnitude = p.force.mag();
-      magnitude /= non_visited_neighbour_count;
+      magnitude = p.force.mag() / non_visited_neighbour_count;
       
       for (Point neighbour: this.graph.get(p)){
-        if (neighbour.position.y <= p.position.y) continue;// neighbour is higher than us in terms of height, we're NOT chilling
+        if (neighbour.position.y <= p.position.y) continue;// neighbour is higher than us in terms of height, we've already travelled to this node
         pole_vector.x = neighbour.position.x; pole_vector.y = neighbour.position.y;
         pole_vector.sub(p.position);
         pole_vector.normalize().mult(magnitude);

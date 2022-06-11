@@ -5,12 +5,12 @@ Point p1, p2, p3, p4, p5, p6;
 Building kk, kk1;
 void setup(){
   size(800, 800);
-  p1 = new Point(new PVector(223, 540));
-  p2 = new Point(new PVector(265, 230));
-  p3 = new Point(new PVector(150, 350));
-  p4 = new Point(new PVector(423, 420));
-  p5 = new Point(new PVector(350, 573));
-  p6 = new Point(new PVector(500, 300));
+  p1 = new Point(new PVector(323, 540));
+  p2 = new Point(new PVector(365, 230));
+  p3 = new Point(new PVector(250, 350));
+  p4 = new Point(new PVector(523, 420));
+  p5 = new Point(new PVector(450, 573));
+  p6 = new Point(new PVector(600, 300));
   
   //p1.apply_force(new PVector(25, 10));
   frameRate(75);
@@ -74,7 +74,7 @@ void draw(){
   //  average += name.force.mag();
   //}
   //println(average);
-  noLoop();
+  //noLoop();
 
   
 }
