@@ -38,7 +38,7 @@ class Building{
     return points;
    }
   ArrayList<Point> get_sorted_points(){
-    // returns a list of sorted points (depending on their height)
+    // returns a list of points sorted in ascending order (depending on their height)
 
     return merge_sort(this.get_points());
   }
@@ -52,7 +52,7 @@ class Building{
 
   }
   
-  void update(){
+  void distribute_gravitational_forces(){
     // the order that we traverse the points is crucial
     // to find the proper net force, we have to traverse the points from highest to lowest height
     
@@ -93,7 +93,6 @@ class Building{
   
   void draw_forces(){
     stroke(color(255, 0, 0));
-    println(this.graph.keySet().size());
     for (Point name: this.graph.keySet()) {
       draw_vector(name.position, name.force);
     }
@@ -122,6 +121,7 @@ class Building{
   ArrayList<Point> get_support_points(){
     ArrayList<Point> points = new ArrayList<Point>();
     Point lowest = this.get_lowest_height();
+
     float threshold = 1;
     for (Point point: this.graph.keySet()){
       if (abs(point.position.y - lowest.position.y) <= threshold) points.add(point);
@@ -145,7 +145,7 @@ class Building{
       if (point.position.x >= highest_x.position.x) highest_x = point;
     }
     PVector center_of_mass = this.get_center_of_mass();
-    println(center_of_mass, lowest_x.position, highest_x.position, points.size());
+
     float coef = 1;
     Point to_rotate = lowest_x;
     boolean rotate_ = false;
@@ -184,13 +184,12 @@ class Building{
   void print_graph(){
     for (Point name: this.graph.keySet()) {
       PVector asdf = name.position;
-      println(asdf, ": ");
       for (Point p: this.graph.get(name)){
         PVector value = p.position;
-        println("-", value);
+        //println("-", value);
       }
   
-    println();println();
+    //println();//println();
   
     }
   }

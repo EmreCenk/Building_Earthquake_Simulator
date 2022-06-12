@@ -1,4 +1,6 @@
 
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 ArrayList<Point> merge(ArrayList<Point> p1, ArrayList<Point> p2){
   // merges two sorted lists (assuming both are sorted in ascending order
@@ -40,4 +42,48 @@ ArrayList<Point> merge_sort(ArrayList<Point> nod){
   for (int i = 0; i < midpoint; i++) half_1.add(nod.get(i));
   for (int i = midpoint; i < nod.size(); i++) half_2.add(nod.get(i));
   return merge(merge_sort(half_1), merge_sort(half_2));
+}
+
+
+
+class PointComparator implements Comparator<Point>{
+  // class used to compare points depending on y coordinate (this class is used for the priority queue)
+  
+  public int compare(Point p1, Point p2){
+    if (p1.position.y < p2.position.y) return 1;
+    return -1;
+  }
+}
+
+ArrayList<Point[]> get_earthquake_traversal_order(Building building){
+  Point current_node;
+  ArrayList<Point[]> order_to_traverse = new ArrayList<Point[]>();
+  PriorityQueue<Point> to_travel = new PriorityQueue<Point>(5, new PointComparator());
+  println("ya");
+
+  for (Point support_point: building.get_support_points()){
+    println("bo");
+    to_travel.add(support_point);
+    println("bobo");
+  }
+
+  println("of");
+  // storing what we've travelled to
+  HashMap<Point, Boolean> travelled = new HashMap<Point, Boolean>();
+  for (Point point: building.graph.keySet())
+    travelled.put(point, false);
+  println("ye");
+  while (to_travel.size() > 0){
+    current_node = to_travel.poll();
+    travelled.put(current_node, true);
+    
+    for (Point neighbour: building.graph.get(current_node)){
+      if (travelled.get(neighbour)) continue;
+      order_to_traverse.add(new Point[] {current_node, neighbour});
+      to_travel.add(neighbour);
+    }
+
+  }
+  println("\n");
+  return order_to_traverse;
 }

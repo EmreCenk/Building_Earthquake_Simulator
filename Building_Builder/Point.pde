@@ -6,7 +6,8 @@ float DEFAULT_RADIUS = 25;
 class Point{
   
   float m, radius, line_length;
-  PVector position, force, torque, pair;
+  PVector position, force, torque, pair, velocity;
+  color colour, outline_colour;
   //force is for displacement (translation/shifting)
   //torque is used to calculate rotation
   
@@ -18,9 +19,12 @@ class Point{
 
     this.force = new PVector(0, 0);
     this.torque = new PVector(0, 0);
+    this.velocity = new PVector(0, 0);
     
     this.line_length = 0; // if this point is a part of a line, then this length symbolizes the length of that line
     this.pair = new PVector(0, 0);
+    this.colour = color(255, 255, 255);
+    this.outline_colour = color(0, 0, 0);
   }
   
   void apply_force(PVector f){
@@ -36,6 +40,8 @@ class Point{
   }
   
   void paint(){
+    fill(this.colour);
+    stroke(this.outline_colour);
     circle(this.position.x, this.position.y, this.radius);
   }
 }
