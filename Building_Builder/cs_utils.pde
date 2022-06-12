@@ -79,6 +79,7 @@ ArrayList<Point[]> get_earthquake_traversal_order(Building building){
     
   while (to_travel.size() > 0){
     current_node = to_travel.poll();
+    if (travelled.get(current_node)) continue;
     travelled.put(current_node, true);
     neighbours =  merge_sort(HashSet_to_ArrayList(building.graph.get(current_node)));
     for (int i = neighbours.size() - 1; i >= 0; i--){
@@ -87,11 +88,6 @@ ArrayList<Point[]> get_earthquake_traversal_order(Building building){
       to_travel.add(neighbours.get(i));
     }
    
-    //println("pq:");
-    //for(Point p: to_travel){
-    //  println(p.position);
-    //}
-    //println("\n");
   }
   return order_to_traverse;
 }

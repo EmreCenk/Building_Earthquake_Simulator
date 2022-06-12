@@ -36,10 +36,10 @@ void setup() {
       kk1.add_line(new Line(w[i], w[j]));
     }
   } 
-
-  p1copy = new Point(new PVector(p1.position.x, p1.position.y));
-  p2copy = new Point(new PVector(p2.position.x, p2.position.y));
-  p3copy = new Point(new PVector(p3.position.x, p3.position.y));
+  println("L", kk1.lines.size());
+  //p1copy = new Point(new PVector(p1.position.x, p1.position.y));
+  //p2copy = new Point(new PVector(p2.position.x, p2.position.y));
+  //p3copy = new Point(new PVector(p3.position.x, p3.position.y));
 
   //kk1.add_line(new Line(p1copy, p2copy));
   //kk1.add_line(new Line(p2copy, p3copy));
@@ -82,6 +82,7 @@ void draw() {
 
     //draw_vector(w, w2);
   }
+  println("S", alpha.size(), kk1.lines.size());
   println("\n\n");
 
 
