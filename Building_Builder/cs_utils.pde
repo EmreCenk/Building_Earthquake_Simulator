@@ -44,6 +44,11 @@ ArrayList<Point> merge_sort(ArrayList<Point> nod){
   return merge(merge_sort(half_1), merge_sort(half_2));
 }
 
+ArrayList<Point> HashSet_to_ArrayList(HashSet<Point> set){
+  ArrayList<Point> final_ = new ArrayList<Point>();
+  for (Point point: set) final_.add(point);
+  return final_;
+}
 
 
 class PointComparator implements Comparator<Point>{
@@ -51,39 +56,42 @@ class PointComparator implements Comparator<Point>{
   
   public int compare(Point p1, Point p2){
     if (p1.position.y < p2.position.y) return 1;
-    return -1;
+    else if (p1.position.y > p2.position.y) return -1;
+    return 0;
   }
 }
 
 ArrayList<Point[]> get_earthquake_traversal_order(Building building){
   Point current_node;
+  ArrayList<Point> neighbours;
+  
   ArrayList<Point[]> order_to_traverse = new ArrayList<Point[]>();
-  PriorityQueue<Point> to_travel = new PriorityQueue<Point>(5, new PointComparator());
-  println("ya");
+  PriorityQueue<Point> to_travel = new PriorityQueue<Point>(building.graph.keySet().size(), new PointComparator());
 
   for (Point support_point: building.get_support_points()){
-    println("bo");
     to_travel.add(support_point);
-    println("bobo");
   }
 
-  println("of");
   // storing what we've travelled to
   HashMap<Point, Boolean> travelled = new HashMap<Point, Boolean>();
   for (Point point: building.graph.keySet())
     travelled.put(point, false);
-  println("ye");
+    
   while (to_travel.size() > 0){
     current_node = to_travel.poll();
     travelled.put(current_node, true);
-    
-    for (Point neighbour: building.graph.get(current_node)){
-      if (travelled.get(neighbour)) continue;
-      order_to_traverse.add(new Point[] {current_node, neighbour});
-      to_travel.add(neighbour);
+    neighbours =  merge_sort(HashSet_to_ArrayList(building.graph.get(current_node)));
+    for (int i = neighbours.size() - 1; i >= 0; i--){
+      if (travelled.get(neighbours.get(i))) continue;
+      order_to_traverse.add(new Point[] {current_node, neighbours.get(i)});
+      to_travel.add(neighbours.get(i));
     }
-
+   
+    //println("pq:");
+    //for(Point p: to_travel){
+    //  println(p.position);
+    //}
+    //println("\n");
   }
-  println("\n");
   return order_to_traverse;
 }
