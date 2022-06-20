@@ -6,7 +6,7 @@ float DEFAULT_RADIUS = 25;
 class Point{
   
   float m, radius, line_length;
-  PVector position, force, torque, pair, velocity;
+  PVector position, force, torque, pair, velocity, earthquake_force;
   color colour, outline_colour;
   //force is for displacement (translation/shifting)
   //torque is used to calculate rotation
@@ -18,6 +18,7 @@ class Point{
     this.m = DEFAULT_MASS;
 
     this.force = new PVector(0, 0);
+    this.earthquake_force = new PVector(0, 0);
     this.torque = new PVector(0, 0);
     this.velocity = new PVector(0, 0);
     

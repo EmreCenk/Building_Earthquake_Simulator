@@ -51,7 +51,13 @@ class Building{
     }
 
   }
-  
+  void reset_earthquake_forces(){
+    for (Point name: this.graph.keySet()) {
+      name.earthquake_force.x = 0;
+      name.earthquake_force.y = 0;
+    }
+
+  }
   void distribute_gravitational_forces(){
     // the order that we traverse the points is crucial
     // to find the proper net force, we have to traverse the points from highest to lowest height
@@ -99,6 +105,15 @@ class Building{
     stroke(0);
   }
   
+  void draw_earthquake_forces(){
+    stroke(color(64, 13, 94));
+    for (Point name: this.graph.keySet()) {
+      println(name.earthquake_force);
+      draw_vector(name.position, name.earthquake_force);
+    }
+    stroke(0);
+    println();
+  }
   PVector get_center_of_mass(){
     return calculate_center_of_mass(this.get_points());
   }
