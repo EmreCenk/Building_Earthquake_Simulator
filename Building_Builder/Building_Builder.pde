@@ -14,7 +14,7 @@ void setup() {
   E = new EarthQuake(0.05);
 
   points0 = new ArrayList<Point>();
-  int n = 20;
+  int n = 10;
   int h = 400;
   int w = 300;
   for (int i = 0; i < n/2; i++){
@@ -57,10 +57,7 @@ void setup() {
 
 void draw() {
   background(255);
-  //kk.update();
-  //kk.check_and_tip();
-  //kk.paint();
-  //kk.draw_forces();
+
 
   kk1.distribute_gravitational_forces();
   kk1.check_and_tip();
@@ -69,7 +66,7 @@ void draw() {
   
   
   E.shake(kk1);
-  //kk1.draw_forces();
+  kk1.draw_forces();
   kk1.draw_earthquake_forces(); 
   
   fill(0);
