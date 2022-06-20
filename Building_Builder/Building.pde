@@ -108,11 +108,9 @@ class Building{
   void draw_earthquake_forces(){
     stroke(color(64, 13, 94));
     for (Point name: this.graph.keySet()) {
-      println(name.earthquake_force);
       draw_vector(name.position, name.earthquake_force);
     }
     stroke(0);
-    println();
   }
   PVector get_center_of_mass(){
     return calculate_center_of_mass(this.get_points());

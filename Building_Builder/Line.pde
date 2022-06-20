@@ -84,7 +84,6 @@ class Line{
       stroke(color(0, 255, 0));
       draw_vector(this.p2.position, this.torque);
       stroke(0);
-      ////println(this.torque, pole, dot_product(this.torque, pole));
     }
     
     if (dot_product(this.torque, pole) < 0) angular_acceleration *= -1; 

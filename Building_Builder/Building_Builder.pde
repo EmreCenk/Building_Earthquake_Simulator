@@ -11,21 +11,25 @@ void setup() {
   size(800, 800);
   frameRate(75);
    
-  E = new EarthQuake(100);
+  E = new EarthQuake(0.05);
 
   points0 = new ArrayList<Point>();
-  int n = 100;
+  int n = 20;
   int h = 400;
   int w = 300;
   for (int i = 0; i < n/2; i++){
-    points0.add(new Point(new PVector(100, 100 + i*h/n)));
+    points0.add(new Point(new PVector(300, 100 + i*h/n)));
   }
   for (int i = 0; i < n/2; i++){
-    points0.add(new Point(new PVector(100 + w, 100 + i * h/n)));
+    points0.add(new Point(new PVector(300 + w, 100 + i * h/n)));
   }
 
 
   kk1 = new Building();
+  //for (int i = 0; i < points0.size() - 1; i++){
+  //  kk1.add_line(new Line(points0.get(i), points0.get(i+1)));
+  //  kk1.add_line(new Line(points0.get(i), points0.get((i+n/2)%n)));
+  //}
   
   //kk1.add_line(new Line(p1, p4));
   //kk1.add_line(new Line(p2, p5));
@@ -45,7 +49,6 @@ void setup() {
       kk1.add_line(new Line(points0.get(i), points0.get(j)));
     }
   } 
-  println("L", kk1.lines.size());
 
 }
 
@@ -62,10 +65,11 @@ void draw() {
   kk1.distribute_gravitational_forces();
   kk1.check_and_tip();
   kk1.paint();
-  kk1.draw_forces();
+
   
   
   E.shake(kk1);
+  //kk1.draw_forces();
   kk1.draw_earthquake_forces(); 
   
   fill(0);
@@ -83,7 +87,6 @@ void draw() {
   //for (Point name: kk.graph.keySet()) {
   //  average += name.force.mag();
   //}
-  ////println(average);
   //noLoop();
 }
 
@@ -93,6 +96,5 @@ void keyPressed() {
   //p1.apply_force(new PVector(25, 10));
   if (key == 's') {
     p2.apply_force(new PVector(0, 10000));
-    ////println("yes");
   }
 }
