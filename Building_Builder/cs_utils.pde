@@ -92,16 +92,54 @@ ArrayList<Point[]> get_earthquake_traversal_order(Building building){
   return order_to_traverse;
 }
 
-HashMap<Float, Integer> get_first_occurence_of_each_y(ArrayList<Point> points){
+HashMap<Float, Integer> get_first_occurence_of_each_y(ArrayList<Point> sorted_points, int interval){
   HashMap<Float, Integer> final_hash = new HashMap<Float, Integer>();
   
-  for (int i = 0; i < points.size(); i++){
-    if (final_hash.containsKey(points.get(i).position.y)) continue;
-    final_hash.put(points.get(i).position.y, i);
-    
+  // two pointer system
+  int left = 0;
+  int right = 0;
+  int index = 0;
+  println();
+
+  while (right < sorted_points.size()){
+    if (sorted_points.get(right).position.y - sorted_points.get(left).position.y < interval)
+      right += 1;
+      
+    else{
+      index = right;
+      while (left <= right){
+        println(left, right, sorted_points.get(left).position.y, index);
+        final_hash.put(sorted_points.get(left).position.y, index);
+        left += 1;
+      }
+    }
+      
   }
-  
+  right -= 1;
+  index = right;
+  while (left <= right){
+    println(left, right, sorted_points.get(left).position.y, index);
+    final_hash.put(sorted_points.get(left).position.y, index);
+    left += 1;
+  }
+//  for (int i = 0; i < sorted_points.size(); i++){
+
+//    if (final_hash.containsKey(sorted_points.get(i).position.y)) continue;
+//    final_hash.put(sorted_points.get(i).position.y, i);
+    
+//  }
+
+  for (Map.Entry<Float, Integer> entry : final_hash.entrySet()) {
+      System.out.println(entry.getKey() + "  " + entry.getValue());
+  }  
   return final_hash;
-  
-  
+}
+
+
+float sup_dist(Point point, ArrayList<Point> support_points){
+  float min_dist = 1000000000;
+  for (Point sup_point: support_points){
+    min_dist = min(min_dist, dist(sup_point.position.x, sup_point.position.y, point.position.x, point.position.y));
+  }
+  return min_dist;
 }

@@ -13,20 +13,16 @@ class EarthQuake{
   
   void shake(Building building){
     
-    //PVector Torque = new PVector(0, 0);
-    //PVector net_force = new PVector(0, 0);
-    //PVector acceleration = new PVector(0, 0);
-    //PVector new_point_2;
-    
+
     //ArrayList<Point> points = building.get_sorted_points();
     ArrayList<Point> support_points = building.get_support_points();
+
     //ArrayList<Point> sorted = building.get_sorted_points();
-    HashMap<Float, Integer> sorted = get_first_occurence_of_each_y(building.get_sorted_points());
+    HashMap<Float, Integer> sorted = get_first_occurence_of_each_y(building.get_sorted_points(), 5);
     //for (Point p: sorted){
     //  if !(s_
     //}
     
-    Point sup_point = support_points.get(0);
     float coef;
     Point p1, p2;
     building.distribute_gravitational_forces(); //todo: do this once in mainloop 
@@ -37,10 +33,10 @@ class EarthQuake{
       p2 = points[1];
       if (support_points.contains(p1))
         p1.earthquake_force = new PVector(this.force.x, this.force.y);
-      //coef = 1.0/(sorted.size() - sorted.indexOf(p1)) * sin(this.tick) * 100;
+      //coef = 1.0/(1 + sorted.get(p1.position.y)) * sin(this.tick + PI/2) * 100;
       
       //TODO: FOLLOWING LINE'S "/(sorted.size() - sorted.indexOf(p1)" SECTION CAUSES ISSUES WHEN COUNTING NEIGHBOURS ABOVE
-      coef = sin(this.tick + PI/2) * -dist(sup_point.position.x, sup_point.position.y, p2.position.x, p2.position.y)/(1 + sorted.get(p1.position.y));
+      coef = sin(this.tick + PI/2) * -sup_dist(p2, support_points)/(1 + sorted.get(p1.position.y));
       if (coef != 0){
         this.force.mult(coef);
         p2.earthquake_force.add(this.force);
