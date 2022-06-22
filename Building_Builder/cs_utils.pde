@@ -102,12 +102,13 @@ HashMap<Float, Integer> get_first_occurence_of_each_y(ArrayList<Point> sorted_po
   println();
 
   while (right < sorted_points.size()){
+    println(right, left);
     if (sorted_points.get(right).position.y - sorted_points.get(left).position.y < interval)
       right += 1;
       
     else{
       index = right;
-      while (left <= right){
+      while (left < right){
         println(left, right, sorted_points.get(left).position.y, index);
         final_hash.put(sorted_points.get(left).position.y, index);
         left += 1;
