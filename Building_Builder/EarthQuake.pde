@@ -21,7 +21,7 @@ class EarthQuake{
     //ArrayList<Point> points = building.get_sorted_points();
     ArrayList<Point> support_points = building.get_support_points();
     ArrayList<Point> sorted = building.get_sorted_points();
-    IntList s_coord = new IntList();
+
     //for (Point p: sorted){
     //  if !(s_
     //}
@@ -57,7 +57,12 @@ class EarthQuake{
   
   private void move_building(Building building){
     PVector acceleration;
+    ArrayList<Point> sp = building.get_support_points();
+    HashSet<Point> support_points = new HashSet<Point>();
+    for (Point p: sp) support_points.add(p);
+    
     for (Point p: building.graph.keySet()){
+      if (support_points.contains(p)) continue;
       acceleration = new PVector(p.earthquake_force.x, p.earthquake_force.y);
 
       acceleration.mult(1/p.m);

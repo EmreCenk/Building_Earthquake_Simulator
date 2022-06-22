@@ -4,11 +4,13 @@
 class Line{
 
   Point p1, p2;
-  float length_, angular_velocity, durability;
+  float length_, angular_velocity, durability, max_strain;
   PVector torque, force, velocity, center;
   Line(Point p1, Point p2){
     this.p1 = p1;
     this.p2 = p2;
+    this.p1.max_strain = MAX_STRAIN_ON_BUILDINGS;
+    this.p2.max_strain = MAX_STRAIN_ON_BUILDINGS;
     
     this.length_ = dist(p1.position.x, p1.position.y, p2.position.x, p2.position.y);
     this.p1.line_length = this.length_;
@@ -20,6 +22,8 @@ class Line{
     this.velocity = new PVector(0, 0);
     this.angular_velocity = 0;
     this.durability = DEFAULT_LINE_DURABILITY;
+    this.max_strain = MAX_STRAIN_ON_BUILDINGS;
+
   }
   
   void update_net_torque(){
@@ -40,6 +44,9 @@ class Line{
   void paint(){
     this.p1.paint();
     this.p2.paint();
+    
+    color interA = lerpColor(color(0, 255, 0), color(255, 0, 0), (this.p1.force.mag() + this.p2.force.mag() + this.p2.earthquake_force.mag() + this.p1.earthquake_force.mag())/this.max_strain);
+    stroke(interA);
     line(this.p1.position.x, this.p1.position.y, this.p2.position.x, this.p2.position.y);
   }
   

@@ -5,7 +5,7 @@ float DEFAULT_RADIUS = 25;
 
 class Point{
   
-  float m, radius, line_length;
+  float m, radius, line_length, max_strain;
   PVector position, force, torque, pair, velocity, earthquake_force;
   color colour, outline_colour;
   //force is for displacement (translation/shifting)
@@ -26,6 +26,7 @@ class Point{
     this.pair = new PVector(0, 0);
     this.colour = color(255, 255, 255);
     this.outline_colour = color(0, 0, 0);
+    this.max_strain = MAX_STRAIN_ON_BUILDINGS;
   }
   
   void apply_force(PVector f){
@@ -41,7 +42,9 @@ class Point{
   }
   
   void paint(){
-    fill(this.colour);
+    color interA = lerpColor(color(0, 255, 0), color(255, 0, 0), (this.force.mag() + this.earthquake_force.mag())/this.max_strain);
+    stroke(interA);
+    fill(interA);
     stroke(this.outline_colour);
     circle(this.position.x, this.position.y, this.radius);
   }

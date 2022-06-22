@@ -2,6 +2,9 @@
 
 import java.util.Map;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 class Building{
   // what's a building, if not just a bunch of lines stuck together?
   ArrayList<Line> lines; // a list of lines in case I need them at some point
