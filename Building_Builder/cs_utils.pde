@@ -92,17 +92,16 @@ ArrayList<Point[]> get_earthquake_traversal_order(Building building){
   return order_to_traverse;
 }
 
-ArrayList<Float> remove_duplicates(ArrayList<Point> points){
-  HashSet<Float> a = new HashSet<Float>();
-  ArrayList<Float> final_list = new ArrayList<Float>();
+HashMap<Float, Integer> get_first_occurence_of_each_y(ArrayList<Point> points){
+  HashMap<Float, Integer> final_hash = new HashMap<Float, Integer>();
   
-  for (Point point: points){
-    if (a.contains(point.position.y)) continue;
-    a.add(point.position.y);
-    final_list.add(point.position.y);
+  for (int i = 0; i < points.size(); i++){
+    if (final_hash.containsKey(points.get(i).position.y)) continue;
+    final_hash.put(points.get(i).position.y, i);
+    
   }
   
-  return final_list;
+  return final_hash;
   
   
 }

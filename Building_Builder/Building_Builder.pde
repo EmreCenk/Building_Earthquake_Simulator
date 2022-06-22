@@ -15,27 +15,22 @@ void setup() {
   kk1 = new Building();
   
   points0 = new ArrayList<Point>();
-  //int n = 10;
-  //int h = 400;
-  //int w = 300;
-  //for (int i = 0; i < n/2; i++){
-  //  points0.add(new Point(new PVector(300, 100 + i*h/n)));
-  //}
-  //for (int i = 0; i < n/2; i++){
-  //  points0.add(new Point(new PVector(300 + w, 100 + i * h/n)));
-  //}
-  //for (int i = 0; i < points0.size() - 1; i++){
-  //  kk1.add_line(new Line(points0.get(i), points0.get(i+1)));
-  //  kk1.add_line(new Line(points0.get(i), points0.get((i+n/2)%n)));
-  //}
+  int n = 10;
+  int h = 400;
+  int w = 300;
+  for (int i = 0; i < n/2; i++){
+    points0.add(new Point(new PVector(300, 100 + i*h/n)));
+  }
+  for (int i = 0; i < n/2; i++){
+    points0.add(new Point(new PVector(300 + w, 100 + i * h/n)));
+  }
+  for (int i = 0; i < points0.size() - 1; i++){
+    kk1.add_line(new Line(points0.get(i), points0.get(i+1)));
+    kk1.add_line(new Line(points0.get(i), points0.get((i+n/2)%n)));
+  }
 
 
-  p1 = new Point(new PVector(100, 200));
-  p2 = new Point(new PVector(150, 350));
-  p3 = new Point(new PVector(50, 350));
-  p4 = new Point(new PVector(123, 400));
-  p5 = new Point(new PVector(200, 100));
-  p6 = new Point(new PVector(400, 300));
+
 
   
   //kk1.add_line(new Line(p1, p4));
@@ -50,18 +45,24 @@ void setup() {
 
   //kk1.add_line(new Line(p3, p6));
 
-  Point[] w = {p1, p2, p3, p4, p5, p6};
-  for (int i = 0; i < w.length - 1; i++){
-    for (int j = i + 1; j < w.length; j++){
-      kk1.add_line(new Line(w[i], w[j]));
-    }
-  } 
-  
-  //for (int i = 0; i < points.size() - 1; i++) {
-  //  for (int j = i + 1; j < points0.size(); j++) {
-  //    kk1.add_line(new Line(points0.get(i), points0.get(j)));
+  //p1 = new Point(new PVector(100, 200));
+  //p2 = new Point(new PVector(150, 350));
+  //p3 = new Point(new PVector(50, 350));
+  //p4 = new Point(new PVector(123, 400));
+  //p5 = new Point(new PVector(200, 100));
+  //p6 = new Point(new PVector(400, 300));
+  //Point[] w = {p1, p2, p3, p4, p5, p6};
+  //for (int i = 0; i < w.length - 1; i++){
+  //  for (int j = i + 1; j < w.length; j++){
+  //    kk1.add_line(new Line(w[i], w[j]));
   //  }
   //} 
+  
+  for (int i = 0; i < points0.size() - 1; i++) {
+    for (int j = i + 1; j < points0.size(); j++) {
+      kk1.add_line(new Line(points0.get(i), points0.get(j)));
+    }
+  } 
 
 }
 

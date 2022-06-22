@@ -20,8 +20,8 @@ class EarthQuake{
     
     //ArrayList<Point> points = building.get_sorted_points();
     ArrayList<Point> support_points = building.get_support_points();
-    ArrayList<Point> sorted = building.get_sorted_points();
-
+    //ArrayList<Point> sorted = building.get_sorted_points();
+    HashMap<Float, Integer> sorted = get_first_occurence_of_each_y(building.get_sorted_points());
     //for (Point p: sorted){
     //  if !(s_
     //}
@@ -40,7 +40,7 @@ class EarthQuake{
       //coef = 1.0/(sorted.size() - sorted.indexOf(p1)) * sin(this.tick) * 100;
       
       //TODO: FOLLOWING LINE'S "/(sorted.size() - sorted.indexOf(p1)" SECTION CAUSES ISSUES WHEN COUNTING NEIGHBOURS ABOVE
-      coef = sin(this.tick + PI/2) * -dist(sup_point.position.x, sup_point.position.y, p2.position.x, p2.position.y)/(sorted.size() - sorted.indexOf(p1));
+      coef = sin(this.tick + PI/2) * -dist(sup_point.position.x, sup_point.position.y, p2.position.x, p2.position.y)/(1 + sorted.get(p1.position.y));
       if (coef != 0){
         this.force.mult(coef);
         p2.earthquake_force.add(this.force);

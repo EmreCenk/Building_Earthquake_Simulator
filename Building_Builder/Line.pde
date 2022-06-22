@@ -47,6 +47,7 @@ class Line{
     
     color interA = lerpColor(color(0, 255, 0), color(255, 0, 0), (this.p1.force.mag() + this.p2.force.mag() + this.p2.earthquake_force.mag() + this.p1.earthquake_force.mag())/this.max_strain);
     stroke(interA);
+    fill(interA);
     line(this.p1.position.x, this.p1.position.y, this.p2.position.x, this.p2.position.y);
   }
   
