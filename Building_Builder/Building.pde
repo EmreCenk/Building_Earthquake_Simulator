@@ -8,6 +8,7 @@ import java.util.Set;
 class Building{
   // what's a building, if not just a bunch of lines stuck together?
   ArrayList<Line> lines; // a list of lines in case I need them at some point
+  ArrayList<Point> points;
   HashMap<Point, HashSet<Point>> graph; // maps points to points that they are adjacent to (basically an adjacency list where the points are nodes and lines are edges)
   float tipping_angular_speed, tipping_angular_acceleration, relative_theta;
   Building(){
@@ -16,6 +17,7 @@ class Building{
     this.relative_theta = 0;
     this.lines = new ArrayList<Line>();
     this.graph = new HashMap<Point, HashSet<Point>>();
+    this.points = new ArrayList<Point>();
   }
   
   
@@ -33,6 +35,8 @@ class Building{
     this.add_node(l.p1, l.p2);
     this.add_node(l.p2, l.p1);
     this.lines.add(l);
+    this.points.add(l.p1);
+    this.points.add(l.p2);
   }
   
   ArrayList<Point> get_points(){
@@ -202,10 +206,8 @@ class Building{
       PVector asdf = name.position;
       for (Point p: this.graph.get(name)){
         PVector value = p.position;
-        //println("-", value);
       }
   
-    //println();//println();
   
     }
   }

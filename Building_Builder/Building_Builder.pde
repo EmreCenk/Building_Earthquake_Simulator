@@ -13,56 +13,8 @@ void setup() {
    
   E = new EarthQuake(0.05);
   kk1 = new Building();
-  
-  points0 = new ArrayList<Point>();
-  int n = 10;
-  int h = 400;
-  int w = 300;
-  for (int i = 0; i < n/2; i++){
-    points0.add(new Point(new PVector(300, 100 + i*h/n)));
-  }
-  for (int i = 0; i < n/2; i++){
-    points0.add(new Point(new PVector(300 + w, 100 + i * h/n)));
-  }
-  for (int i = 0; i < points0.size() - 1; i++){
-    kk1.add_line(new Line(points0.get(i), points0.get(i+1)));
-    kk1.add_line(new Line(points0.get(i), points0.get((i+n/2)%n)));
-  }
-
-
-
-
-  
-  //kk1.add_line(new Line(p1, p4));
-  //kk1.add_line(new Line(p2, p5));
-  //kk1.add_line(new Line(p3, p6));
-  
-  //kk1.add_line(new Line(p1, p2));
-  //kk1.add_line(new Line(p2, p3));
-
-  //kk1.add_line(new Line(p4, p5));
-  //kk1.add_line(new Line(p5, p6));
-
-  //kk1.add_line(new Line(p3, p6));
-
-  //p1 = new Point(new PVector(100, 200));
-  //p2 = new Point(new PVector(150, 350));
-  //p3 = new Point(new PVector(50, 350));
-  //p4 = new Point(new PVector(123, 400));
-  //p5 = new Point(new PVector(200, 100));
-  //p6 = new Point(new PVector(400, 300));
-  //Point[] w = {p1, p2, p3, p4, p5, p6};
-  //for (int i = 0; i < w.length - 1; i++){
-  //  for (int j = i + 1; j < w.length; j++){
-  //    kk1.add_line(new Line(w[i], w[j]));
-  //  }
-  //} 
-  
-  for (int i = 0; i < points0.size() - 1; i++) {
-    for (int j = i + 1; j < points0.size(); j++) {
-      kk1.add_line(new Line(points0.get(i), points0.get(j)));
-    }
-  } 
+  kk1.add_line(new Line(new Point(new PVector(width*0.4, height*0.6)), new Point(new PVector(width*0.6, height*0.9))));
+  reset_building_outlines();
 
 }
 
@@ -71,7 +23,8 @@ void setup() {
 
 void draw() {
   background(255);
-
+  
+  if (kk1.graph.keySet().size() == 0) return;
 
   kk1.distribute_gravitational_forces();
   kk1.check_and_tip();
@@ -87,6 +40,7 @@ void draw() {
   kk1.draw_center_of_mass();
   fill(255);
   
+
   kk1.paint();
 
 
@@ -103,11 +57,51 @@ void draw() {
   //noLoop();
 }
 
+
+String mode = "point"; // "point" or "connection"
+
 void keyPressed() {
   redraw();
   //redraw();
   //p1.apply_force(new PVector(25, 10));
-  if (key == 's') {
-    p2.apply_force(new PVector(0, 10000));
+  if (key == 'p')
+    mode = "point";
+  else if (key == 'c')
+    mode = "connection";
+    
+  println(mode);
+}
+
+void reset_building_outlines(){
+
+  for (Point point: kk1.graph.keySet()){
+    point.outline_colour = point.colour;
   }
+}
+
+
+Point current_point = null;
+
+void mousePressed(){
+  reset_building_outlines();
+
+
+  
+  int p = coords_on_a_point(new PVector(mouseX, mouseY), kk1.points);
+  
+  if (p != -1){
+    Point new_point = kk1.points.get(p);
+    new_point.outline_colour = color(0, 0, 0);
+    if (mode.equals("connection") && current_point != null && !new_point.equals(current_point)){
+      kk1.add_line(new Line(current_point, new_point));
+    }
+    current_point = new_point;
+  }
+  else if (mode.equals("point")){
+    if (current_point == null ) return;
+    Point new_point = new Point(new PVector(mouseX, mouseY));
+    kk1.add_line(new Line(current_point, new_point));    
+    return;
+  }
+
 }

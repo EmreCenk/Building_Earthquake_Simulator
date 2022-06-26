@@ -36,3 +36,13 @@ PVector rotate_around_pivot(PVector pivot, PVector point, float theta){
   return rotated_p;
 
 }
+
+int coords_on_a_point(PVector coordinate, ArrayList<Point> points){
+  
+  for (int i = 0; i < points.size(); i++){
+    if (dist(coordinate.x, coordinate.y, points.get(i).position.x, points.get(i).position.y) < points.get(i).radius)
+      return i;
+  }
+
+  return -1;
+}

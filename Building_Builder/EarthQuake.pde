@@ -48,7 +48,6 @@ class EarthQuake{
     //if (this.tick % 20 == 0) this.force.mult(-1);
     //float w = 0.1;
     //if (this.tick > w || this.tick < -w) this.counter *= -1;
-    //println(this.tick, sin(this.tick));
   }
   
   private void move_building(Building building){
@@ -63,7 +62,6 @@ class EarthQuake{
 
       acceleration.mult(1/p.m);
       p.velocity.x = acceleration.x;
-      //println(p.velocity);
       //p.velocity.add(acceleration);
       p.position.add(p.velocity);
     }

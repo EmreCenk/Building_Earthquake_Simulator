@@ -42,9 +42,9 @@ class Point{
   }
   
   void paint(){
-    color interA = lerpColor(color(0, 255, 0), color(255, 0, 0), (this.force.mag() + this.earthquake_force.mag())/this.max_strain);
-    stroke(interA);
-    fill(interA);
+    this.colour = lerpColor(color(0, 255, 0), color(255, 0, 0), (this.force.mag() + this.earthquake_force.mag())/this.max_strain);
+    stroke(this.outline_colour);
+    fill(this.colour);
     circle(this.position.x, this.position.y, this.radius);
   }
 }

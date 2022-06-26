@@ -99,17 +99,14 @@ HashMap<Float, Integer> get_first_occurence_of_each_y(ArrayList<Point> sorted_po
   int left = 0;
   int right = 0;
   int index = 0;
-  println();
 
   while (right < sorted_points.size()){
-    println(right, left);
     if (sorted_points.get(right).position.y - sorted_points.get(left).position.y < interval)
       right += 1;
       
     else{
       index = right;
       while (left < right){
-        println(left, right, sorted_points.get(left).position.y, index);
         final_hash.put(sorted_points.get(left).position.y, index);
         left += 1;
       }
@@ -119,20 +116,10 @@ HashMap<Float, Integer> get_first_occurence_of_each_y(ArrayList<Point> sorted_po
   right -= 1;
   index = right;
   while (left <= right){
-    println(left, right, sorted_points.get(left).position.y, index);
     final_hash.put(sorted_points.get(left).position.y, index);
     left += 1;
   }
-//  for (int i = 0; i < sorted_points.size(); i++){
 
-//    if (final_hash.containsKey(sorted_points.get(i).position.y)) continue;
-//    final_hash.put(sorted_points.get(i).position.y, i);
-    
-//  }
-
-  for (Map.Entry<Float, Integer> entry : final_hash.entrySet()) {
-      System.out.println(entry.getKey() + "  " + entry.getValue());
-  }  
   return final_hash;
 }
 
